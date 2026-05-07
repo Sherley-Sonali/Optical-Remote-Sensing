@@ -16,7 +16,50 @@
    * `Miryalaguda_ET_Rabi_training.csv`
 
 4. These CSV files are then used as training datasets for the deep learning model.
+### MODIS ET Downscaling - Random Forest & XGBoost
 
+Spatial downscaling of MODIS MOD16A2 Evapotranspiration (500 m → 10–30 m) using ensemble machine learning models trained on Sentinel-2, Landsat 8, and SRTM features.
+
+**Study Areas:** Hyderabad (annual) | Miryalaguda Kharif & Rabi seasons, Telangana, India
+
+
+
+### Datasets Required
+
+Place these CSVs in the same folder before running:
+
+| File | Features | Samples |
+|------|----------|---------|
+| `Hyderabad_ET_training.csv` | NDVI, NDWI, EVI, Albedo, LST, NIR_RED_ratio, SWIR_NIR_ratio, Elevation, Slope | 12,789 |
+| `Miryalaguda_ET_Kharif_training.csv` | Same + LSWI | ~9,500 |
+| `Miryalaguda_ET_Rabi_training.csv` | Same + LSWI | ~8,500 |
+
+Target variable in all three: `MODIS_ET` (mm/8-day)
+
+
+
+### How to Run
+
+```bash
+pip install pandas numpy matplotlib scikit-learn xgboost joblib
+python3 et_downscaling_RF_XGB.py
+```
+
+Outputs saved to `./outputs/` automatically.
+
+
+## Results
+
+| Dataset | Model | RMSE | R² |
+|---------|-------|------|----|
+| Hyderabad Annual | RF | 1.034 | 0.361 |
+| Hyderabad Annual | XGB | 1.027 | 0.370 |
+| Miryalaguda Kharif | RF | 1.277 | 0.228 |
+| Miryalaguda Kharif | XGB | 1.265 | 0.243 |
+| Miryalaguda Rabi | RF | 1.558 | 0.465 |
+| Miryalaguda Rabi | XGB | 1.552 | 0.470 |
+
+XGBoost marginally outperforms Random Forest across all datasets. LST and NDWI are the dominant ET predictors in the annual and dry-season datasets; Elevation and LSWI take over during the Kharif monsoon season.
 ## Vision Transformer (ViT) Model
 
 1. Upload the three CSV files generated in Step 1 to the Kaggle dataset:
