@@ -2,7 +2,7 @@
 =============================================================
  MODIS ET Downscaling — RF + XGBoost
  Datasets : Hyderabad (annual) | Miryalaguda Kharif | Rabi
- Author   : Your Name
+ Author   : Sherley
 =============================================================
 """
 
